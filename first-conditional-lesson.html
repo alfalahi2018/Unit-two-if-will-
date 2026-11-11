@@ -1,0 +1,746 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>First Conditional: If + will</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@500;700&family=Fredoka:wght@500;600&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#eef4e6;--paper:#fbfdf8;--ink:#1f3a33;--muted:#5b7068;--line:#cfdcc6;
+  --leaf:#2f7a45;--leaf-dark:#215a33;--sun:#f2b632;
+  --iff:#2d6cdf;--iff-bg:#e4edfd;--wil:#2f7a45;--wil-bg:#dff1e1;
+  --ok:#2f7a45;--ok-bg:#dff1e1;--bad:#b5362f;--bad-bg:#fbe3e0;
+  --tx:#2d6cdf;--to:#d9577a;
+  --display:"Fredoka","Trebuchet MS","Segoe UI",system-ui,sans-serif;
+  --body:"Nunito","Segoe UI",system-ui,sans-serif;
+  --arabic:"Cairo","Segoe UI",Tahoma,sans-serif;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--body);font-size:18px;line-height:1.55;padding:clamp(12px,3vw,40px)}
+.sheet{max-width:960px;margin:0 auto;background:var(--paper);border:2px solid var(--ink);border-radius:20px;overflow:hidden;box-shadow:6px 6px 0 var(--leaf)}
+header{padding:clamp(18px,4vw,32px) clamp(18px,4vw,40px) 16px;border-bottom:2px solid var(--line)}
+.school{margin:0 0 6px;color:var(--muted);font-weight:700;font-size:15px}
+.tag{display:inline-block;margin:0 0 10px;padding:2px 12px;border-radius:999px;background:var(--sun);color:#3b2a00;font-weight:700;font-size:14px}
+h1{margin:0;font-family:var(--display);font-weight:600;font-size:clamp(26px,5vw,40px);line-height:1.15}
+main{padding:clamp(16px,3.5vw,32px) clamp(16px,4vw,40px)}
+h2{margin:0 0 12px;font-family:var(--display);font-weight:600;font-size:clamp(22px,3.4vw,28px)}
+h3{margin:0 0 6px;font-family:var(--display);font-weight:500;font-size:20px}
+.ar{font-family:var(--arabic);direction:rtl;text-align:right;font-weight:500;line-height:1.9}
+p{margin:0 0 10px}
+
+.tabs{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 22px}
+.tab{font-family:var(--display);font-weight:500;font-size:17px;padding:8px 16px;border:2px solid var(--ink);border-radius:12px;background:#fff;color:var(--ink);cursor:pointer}
+.tab:hover{background:#eaf5e6}
+.tab[aria-selected="true"]{background:var(--leaf);color:#fff}
+.tab:focus-visible,button:focus-visible,.slot:focus-visible{outline:3px solid var(--sun);outline-offset:2px}
+section.panel[hidden]{display:none}
+
+.card{background:#fff;border:2px solid var(--line);border-radius:14px;padding:16px 18px;margin:0 0 16px}
+.formula{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:center;margin:6px 0 10px;font-family:var(--display);font-size:clamp(20px,3.6vw,30px)}
+.half{padding:10px 18px;border-radius:14px;border:2px solid;font-weight:600}
+.half.if{background:var(--iff-bg);border-color:var(--iff);color:var(--iff)}
+.half.will{background:var(--wil-bg);border-color:var(--wil);color:var(--leaf-dark)}
+.sep{font-weight:600}
+.eg{font-size:clamp(20px,3vw,26px);text-align:center;margin:6px 0}
+.eg .a{color:var(--iff);font-weight:700}.eg .b{color:var(--leaf-dark);font-weight:700}
+.trick{background:#fff7dc;border-color:var(--ink)}
+.trick strong.big{font-family:var(--display);font-size:22px}
+.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.mis .wrong{color:var(--bad);font-weight:700}.mis .right{color:var(--ok);font-weight:700}
+.mis .wrong::before{content:"\2717  "}.mis .right::before{content:"\2713  "}
+.mis p{margin:0 0 4px}
+.mis .why{color:var(--muted);font-size:16px;margin-top:6px}
+ol.steps{margin:0;padding-left:1.3em}
+ol.steps li{margin-bottom:8px}
+.go{margin-top:6px}
+
+button.act{font-family:var(--display);font-weight:500;font-size:19px;padding:10px 22px;border-radius:12px;cursor:pointer;border:2px solid var(--ink);background:var(--leaf);color:#fff;box-shadow:3px 3px 0 var(--ink)}
+button.act:hover:not(:disabled){background:var(--leaf-dark)}
+button.act:active:not(:disabled){transform:translate(2px,2px);box-shadow:1px 1px 0 var(--ink)}
+button.act:disabled{opacity:.45;cursor:not-allowed;box-shadow:none}
+button.act.ghost{background:#fff;color:var(--ink)}
+button.act.ghost:hover:not(:disabled){background:#f0f5ea}
+.row{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-top:14px}
+.muted{color:var(--muted)}
+.meter{font-weight:700;color:var(--muted);margin-bottom:8px}
+
+/* choices */
+.choices{display:grid;gap:10px;margin:12px 0 0}
+.choice{font:inherit;font-weight:600;text-align:left;padding:12px 16px;border:2px solid var(--line);border-radius:12px;background:var(--paper);color:var(--ink);cursor:pointer;display:flex;justify-content:space-between;gap:10px;align-items:center}
+.choice:hover:not(:disabled){border-color:var(--leaf);background:#f0f7ea}
+.choice:disabled{cursor:default}
+.choice.right{border-color:var(--ok);background:var(--ok-bg);color:var(--ok)}
+.choice.right::after{content:"\2713"}
+.choice.wrong{border-color:var(--bad);background:var(--bad-bg);color:var(--bad)}
+.choice.wrong::after{content:"\2717"}
+.prompt{font-size:clamp(19px,2.8vw,24px);margin:0}
+.prompt .bad{color:var(--bad);font-weight:700}
+.tagbad{display:inline-block;margin-bottom:6px;padding:0 10px;border-radius:999px;background:var(--bad-bg);color:var(--bad);font-weight:700;font-size:14px}
+.fb{margin-top:12px;padding:12px 14px;border-radius:12px;border:2px solid var(--line);background:#fff}
+.fb[hidden]{display:none}
+.fb.good{border-color:var(--ok);background:var(--ok-bg)}
+.fb.nope{border-color:var(--bad);background:var(--bad-bg)}
+.fb p{margin:0 0 4px}
+
+/* dice */
+.teams{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-bottom:14px}
+.team{border:2px solid var(--line);border-radius:14px;background:#fff;padding:10px 14px;text-align:center}
+.team.on{border-color:var(--ink);box-shadow:3px 3px 0 var(--sun)}
+.team input{width:100%;font:inherit;font-family:var(--display);font-size:19px;text-align:center;border:0;border-bottom:2px dashed var(--line);background:none;color:var(--ink);padding:2px}
+.team .pts{font-family:var(--display);font-size:34px;line-height:1.1}
+.diceArea{display:flex;flex-wrap:wrap;gap:20px;align-items:center;justify-content:center;margin:6px 0 4px}
+.die{width:96px;height:96px;background:#fff;border:3px solid var(--ink);border-radius:18px;box-shadow:4px 4px 0 var(--ink);display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(3,1fr);padding:12px;gap:2px}
+.die i{width:16px;height:16px;border-radius:50%;background:transparent;place-self:center}
+.die i.on{background:var(--ink)}
+.die.rolling{animation:shake .18s linear infinite}
+@keyframes shake{0%{transform:rotate(-8deg)}50%{transform:rotate(8deg) translateY(-4px)}100%{transform:rotate(-8deg)}}
+.clause{font-family:var(--display);font-size:clamp(22px,3.6vw,30px);color:var(--iff);margin:0}
+.clause span{color:var(--muted)}
+
+/* drag and drop */
+.dd{display:grid;gap:10px;margin:8px 0 14px}
+.dd-row{display:flex;flex-wrap:wrap;gap:10px;align-items:center;padding:8px 12px;border:2px solid var(--line);border-radius:12px;background:#fff}
+.dd-if{font-weight:700;color:var(--iff);flex:0 0 auto}
+.slot{flex:1 1 240px;min-height:52px;border:3px dashed #aab9a2;border-radius:12px;display:flex;align-items:center;padding:4px;background:#f7faf3;cursor:pointer}
+.slot .ph{color:var(--muted);font-size:15px;padding:0 8px}
+.slot.over{border-color:var(--leaf);background:#e6f4de}
+.slot.right{border-style:solid;border-color:var(--ok);background:var(--ok-bg)}
+.slot.wrong{border-style:solid;border-color:var(--bad);background:var(--bad-bg)}
+.pool{display:flex;flex-wrap:wrap;gap:10px;min-height:60px;padding:12px;border:2px dashed var(--line);border-radius:14px;background:#fff}
+.pool.over{border-color:var(--leaf)}
+.dcard{font:inherit;font-weight:700;padding:8px 14px;border-radius:12px;border:2px solid var(--wil);background:var(--wil-bg);color:var(--leaf-dark);cursor:grab;touch-action:none;user-select:none;-webkit-user-select:none}
+.dcard.sel{outline:3px solid var(--sun);outline-offset:2px}
+.dcard.dragging{opacity:.35}
+.ghost-card{position:fixed;z-index:50;pointer-events:none;box-shadow:4px 4px 0 var(--ink);transform:rotate(-3deg)}
+
+/* xo */
+.xoWrap{display:grid;grid-template-columns:minmax(0,320px) minmax(0,1fr);gap:22px;align-items:start}
+.board{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;max-width:320px;width:100%}
+.cell{aspect-ratio:1;font-family:var(--display);font-size:clamp(40px,9vw,64px);font-weight:600;border:3px solid var(--ink);border-radius:14px;background:#fff;cursor:pointer;line-height:1;color:var(--ink)}
+.cell:hover:not(:disabled){background:#f0f7ea}
+.cell:disabled{cursor:default}
+.cell.X{color:var(--tx)}.cell.O{color:var(--to)}
+.cell.pend{outline:4px solid var(--sun)}
+.cell.win{background:var(--sun)}
+.turn{font-family:var(--display);font-size:22px;margin:0 0 6px}
+.turn b.X{color:var(--tx)}.turn b.O{color:var(--to)}
+.tally{display:flex;gap:16px;margin-top:8px;font-weight:700;color:var(--muted)}
+
+footer{padding:14px clamp(18px,4vw,40px);border-top:2px solid var(--line);display:flex;flex-wrap:wrap;gap:8px 24px;justify-content:space-between;color:var(--muted);font-size:15px;font-weight:600}
+@media (max-width:700px){
+  body{font-size:17px}
+  .grid2{grid-template-columns:1fr}
+  .xoWrap{grid-template-columns:1fr}
+  .board{margin:0 auto}
+  .die{width:84px;height:84px;padding:10px}
+}
+@media (prefers-reduced-motion:reduce){.die.rolling{animation:none}}
+</style>
+</head>
+<body>
+<div class="sheet">
+  <header>
+    <p class="school">Khawlah Bint Thalabah (5-9)</p>
+    <p class="tag">Grammar lesson</p>
+    <h1>First Conditional: If + will</h1>
+  </header>
+
+  <main>
+    <div class="tabs" id="tabs" role="tablist" aria-label="Lesson sections"></div>
+
+    <!-- LEARN -->
+    <section class="panel" id="p-learn" role="tabpanel">
+      <h2>The rule</h2>
+      <div class="card">
+        <div class="formula">
+          <span class="half if">If + present simple</span><span class="sep">,</span><span class="half will">will + base verb</span>
+        </div>
+        <p class="eg"><span class="a">If we plant flowers,</span> <span class="b">more bees will come.</span></p>
+        <p class="ar" lang="ar">القاعدة: بعد if نستخدم المضارع البسيط، وفي جملة النتيجة نستخدم will + الفعل (المصدر).</p>
+        <p class="ar" lang="ar" style="margin:0">مثال: إذا زرعنا الأزهار، سيأتي المزيد من النحل.</p>
+      </div>
+
+      <div class="card trick">
+        <h3>The trick: <strong class="big">if and will never sit together!</strong></h3>
+        <p><span style="color:var(--iff);font-weight:700">The if half</span> has no will. <span style="color:var(--leaf-dark);font-weight:700">The result half</span> has will.</p>
+        <p class="ar" lang="ar" style="margin:0">الحيلة: if و will لا يجلسان معاً! نصف if بدون will، ونصف النتيجة فيه will.</p>
+      </div>
+
+      <h2>Four common mistakes</h2>
+      <div class="grid2">
+        <div class="card mis">
+          <p class="wrong">If it will rain, we will stay inside.</p>
+          <p class="right">If it rains, we will stay inside.</p>
+          <p class="why">No will after if.</p>
+          <p class="why ar" lang="ar">لا نكتب will بعد if.</p>
+        </div>
+        <div class="card mis">
+          <p class="wrong">If she come, I will help her.</p>
+          <p class="right">If she comes, I will help her.</p>
+          <p class="why">With he / she / it, add s.</p>
+          <p class="why ar" lang="ar">مع he / she / it نضيف s.</p>
+        </div>
+        <div class="card mis">
+          <p class="wrong">We will played outside.</p>
+          <p class="right">We will play outside.</p>
+          <p class="why">After will, use the base verb only.</p>
+          <p class="why ar" lang="ar">بعد will نستخدم المصدر فقط (بدون s أو ed أو to).</p>
+        </div>
+        <div class="card mis">
+          <p class="wrong">If it rains, we don’t play.</p>
+          <p class="right">If it rains, we won’t play.</p>
+          <p class="why">The result is in the future: use won’t + base verb.</p>
+          <p class="why ar" lang="ar">النتيجة في المستقبل، فنستخدم won’t + المصدر.</p>
+        </div>
+      </div>
+
+      <h2>Quick check: 3 steps</h2>
+      <div class="card">
+        <ol class="steps">
+          <li>Is there a will in the if half? Take it out.<div class="ar" lang="ar">هل في نصف if كلمة will؟ احذفيها.</div></li>
+          <li>Did you add s with he / she / it?<div class="ar" lang="ar">هل أضفتِ s مع he / she / it؟</div></li>
+          <li>Is the verb after will a base verb?<div class="ar" lang="ar">هل الفعل بعد will في صورة المصدر؟</div></li>
+        </ol>
+      </div>
+      <div class="go"><button type="button" class="act" data-go="fix">Now fix the mistakes</button></div>
+    </section>
+
+    <!-- FIX IT -->
+    <section class="panel" id="p-fix" role="tabpanel" hidden>
+      <h2>Fix it!</h2>
+      <p class="muted">Each sentence has a mistake. Choose the correct sentence.</p>
+      <div class="card" id="fixBox"></div>
+    </section>
+
+    <!-- DICE -->
+    <section class="panel" id="p-dice" role="tabpanel" hidden>
+      <h2>Dice game</h2>
+      <p class="muted">Two teams take turns. Roll the dice, then finish the sentence. A correct answer wins the points on the dice. 5 turns each.</p>
+      <div class="teams" id="teams"></div>
+      <div class="card">
+        <div class="meter" id="diceTurn"></div>
+        <div class="diceArea">
+          <div class="die" id="die" role="img" aria-label="Dice"></div>
+          <button type="button" class="act" id="rollBtn">Roll the dice</button>
+        </div>
+        <div id="diceQ"></div>
+        <div class="fb" id="diceFb" hidden></div>
+        <div class="row"><button type="button" class="act ghost" id="diceReset">New game</button></div>
+      </div>
+    </section>
+
+    <!-- DRAG AND DROP -->
+    <section class="panel" id="p-drag" role="tabpanel" hidden>
+      <h2>Drag and drop</h2>
+      <p class="muted">Drag each result card to the matching if-clause. You can also tap a card, then tap a box.</p>
+      <div class="dd" id="ddRows"></div>
+      <div class="pool" id="pool" aria-label="Result cards"></div>
+      <div class="row">
+        <button type="button" class="act" id="ddCheck">Check</button>
+        <button type="button" class="act ghost" id="ddReset">Start again</button>
+        <span id="ddMsg" class="meter" style="margin:0" aria-live="polite"></span>
+      </div>
+    </section>
+
+    <!-- XO -->
+    <section class="panel" id="p-xo" role="tabpanel" hidden>
+      <h2>X O game</h2>
+      <p class="muted">Pick a square, then answer the question. A correct answer wins the square. A wrong answer passes the turn. Get three in a row!</p>
+      <div class="xoWrap">
+        <div>
+          <div class="board" id="board"></div>
+        </div>
+        <div>
+          <p class="turn" id="xoTurn"></p>
+          <div id="xoQ" class="card" hidden></div>
+          <div class="fb" id="xoFb" hidden></div>
+          <div class="row">
+            <button type="button" class="act" id="xoNext" hidden>Continue</button>
+            <button type="button" class="act ghost" id="xoReset">New game</button>
+          </div>
+          <div class="tally"><span>X wins: <span id="tX">0</span></span><span>O wins: <span id="tO">0</span></span></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <span>Created by T.Badria Alfalahi</span>
+    <span>Khawlah Bint Thalabah (5-9)</span>
+  </footer>
+</div>
+
+<script>
+(function(){
+  /* ---------- helpers ---------- */
+  function $(id){ return document.getElementById(id); }
+  function h(tag, cls, text){
+    var e = document.createElement(tag);
+    if (cls) e.className = cls;
+    if (text !== undefined) e.textContent = text;
+    return e;
+  }
+  function shuffle(a){
+    a = a.slice();
+    for (var i = a.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1));
+      var t = a[i]; a[i] = a[j]; a[j] = t;
+    }
+    return a;
+  }
+  /* options[0] is the correct one. cb(correct) runs after a choice. */
+  function choices(box, options, cb){
+    var wrap = h('div', 'choices');
+    var items = shuffle(options.map(function(t, i){ return {t:t, ok:i === 0}; }));
+    var btns = items.map(function(it){
+      var b = h('button', 'choice', it.t);
+      b.type = 'button';
+      b.addEventListener('click', function(){
+        btns.forEach(function(x, k){
+          x.disabled = true;
+          if (items[k].ok) x.classList.add('right');
+        });
+        if (!it.ok) b.classList.add('wrong');
+        cb(it.ok);
+      });
+      wrap.appendChild(b);
+      return b;
+    });
+    box.appendChild(wrap);
+    return btns;
+  }
+
+  /* ---------- SCORM 1.2 (does nothing outside an LMS) ---------- */
+  var scorm = (function(){
+    var api = null, ready = false, finished = false;
+    function find(w){
+      var n = 0;
+      try {
+        while (w && !w.API && w.parent && w.parent !== w && n < 10) { n++; w = w.parent; }
+        return w && w.API ? w.API : null;
+      } catch (e) { return null; }
+    }
+    api = find(window);
+    if (!api && window.opener) api = find(window.opener);
+    function init(){
+      if (!api || ready) return ready;
+      try { ready = String(api.LMSInitialize('')) === 'true'; } catch (e) { ready = false; }
+      return ready;
+    }
+    function get(k){ try { return ready ? String(api.LMSGetValue(k)) : ''; } catch (e) { return ''; } }
+    function set(k, v){ try { if (ready) api.LMSSetValue(k, String(v)); } catch (e) {} }
+    function commit(){ try { if (ready) api.LMSCommit(''); } catch (e) {} }
+    function finish(){
+      if (!ready || finished) return;
+      finished = true;
+      try { api.LMSFinish(''); } catch (e) {}
+    }
+    return {init:init, get:get, set:set, commit:commit, finish:finish};
+  })();
+  scorm.init();
+  (function(){
+    var st = scorm.get('cmi.core.lesson_status');
+    if (!st || st === 'not attempted' || st === 'unknown') scorm.set('cmi.core.lesson_status', 'incomplete');
+    scorm.commit();
+  })();
+  /* the score and completion come from the "Fix it" questions */
+  var completedSent = /^(completed|passed)$/.test(scorm.get('cmi.core.lesson_status'));
+  function reportFix(score, total){
+    scorm.set('cmi.core.score.min', 0);
+    scorm.set('cmi.core.score.max', 100);
+    scorm.set('cmi.core.score.raw', Math.round(score / total * 100));
+    if (!completedSent) { completedSent = true; scorm.set('cmi.core.lesson_status', 'completed'); }
+    scorm.commit();
+  }
+  window.addEventListener('pagehide', function(){ scorm.commit(); scorm.finish(); });
+  window.addEventListener('beforeunload', function(){ scorm.commit(); scorm.finish(); });
+
+  /* ---------- tabs ---------- */
+  var TABS = [['learn','Learn'],['fix','Fix it'],['dice','Dice game'],['drag','Drag & drop'],['xo','X O']];
+  var tabsEl = $('tabs');
+  var tabBtns = {};
+  function showTab(id){
+    TABS.forEach(function(t){
+      var on = t[0] === id;
+      tabBtns[t[0]].setAttribute('aria-selected', on ? 'true' : 'false');
+      tabBtns[t[0]].tabIndex = on ? 0 : -1;
+      $('p-' + t[0]).hidden = !on;
+    });
+  }
+  TABS.forEach(function(t, i){
+    var b = h('button', 'tab', t[1]);
+    b.type = 'button';
+    b.setAttribute('role', 'tab');
+    b.addEventListener('click', function(){ showTab(t[0]); });
+    b.addEventListener('keydown', function(e){
+      var d = e.key === 'ArrowRight' ? 1 : e.key === 'ArrowLeft' ? -1 : 0;
+      if (!d) return;
+      e.preventDefault();
+      var n = TABS[(i + d + TABS.length) % TABS.length][0];
+      showTab(n);
+      tabBtns[n].focus();
+    });
+    tabsEl.appendChild(b);
+    tabBtns[t[0]] = b;
+  });
+  [].slice.call(document.querySelectorAll('[data-go]')).forEach(function(b){
+    b.addEventListener('click', function(){ showTab(b.getAttribute('data-go')); window.scrollTo({top:0, behavior:'smooth'}); });
+  });
+  showTab('learn');
+
+  /* ---------- rules (English + Arabic) ---------- */
+  var RULE = {
+    nowill:{en:'Do not use will after if. Use the present simple.', ar:'لا نكتب will بعد if، بل المضارع البسيط.'},
+    s:{en:'With he / she / it, add s.', ar:'مع he / she / it نضيف s.'},
+    base:{en:'After will, use the base verb only.', ar:'بعد will نستخدم المصدر فقط (بدون s أو ed أو to).'},
+    wont:{en:'The result is in the future, so use won\u2019t + base verb.', ar:'النتيجة في المستقبل، فنستخدم won\u2019t + المصدر.'}
+  };
+  function ruleBox(fb, ok, rule){
+    fb.textContent = '';
+    fb.className = 'fb ' + (ok ? 'good' : 'nope');
+    var p = h('p'); var s = h('strong', null, ok ? 'Correct! ' : 'Not quite. ');
+    p.appendChild(s); p.appendChild(document.createTextNode(rule.en));
+    var a = h('p', 'ar', rule.ar); a.lang = 'ar';
+    fb.appendChild(p); fb.appendChild(a);
+    fb.hidden = false;
+  }
+
+  /* ---------- Fix it ---------- */
+  var FIX = [
+    {bad:'If it will rain tomorrow, we will stay inside.', o:['If it rains tomorrow, we will stay inside.','If it rained tomorrow, we will stay inside.','If it will rains tomorrow, we will stay inside.'], r:'nowill'},
+    {bad:'If Sara come, she will bring her camera.', o:['If Sara comes, she will bring her camera.','If Sara coming, she will bring her camera.','If Sara came, she will bring her camera.'], r:'s'},
+    {bad:'If we see birds, we will watched them.', o:['If we see birds, we will watch them.','If we see birds, we will watching them.','If we see birds, we will to watch them.'], r:'base'},
+    {bad:'If it rains, we don\u2019t play in the garden.', o:['If it rains, we won\u2019t play in the garden.','If it rains, we didn\u2019t play in the garden.','If it rains, we won\u2019t played in the garden.'], r:'wont'},
+    {bad:'If students will recycle, they will help the planet.', o:['If students recycle, they will help the planet.','If students recycled, they will help the planet.','If students will recycled, they will help the planet.'], r:'nowill'},
+    {bad:'If he finish his work, he will go out.', o:['If he finishes his work, he will go out.','If he finished his work, he will go out.','If he finishing his work, he will go out.'], r:'s'},
+    {bad:'If the weather is hot, we will drank water.', o:['If the weather is hot, we will drink water.','If the weather is hot, we will drinking water.','If the weather is hot, we will drinks water.'], r:'base'},
+    {bad:'If Omar runs fast, he will to win the race.', o:['If Omar runs fast, he will win the race.','If Omar runs fast, he will won the race.','If Omar runs fast, he will wins the race.'], r:'base'}
+  ];
+  var fixBox = $('fixBox'), fixI = 0, fixScore = 0;
+  function fixRender(){
+    fixBox.textContent = '';
+    if (fixI >= FIX.length) {
+      fixBox.appendChild(h('h3', null, 'You got ' + fixScore + ' out of ' + FIX.length));
+      reportFix(fixScore, FIX.length);
+      fixBox.appendChild(h('p', null, fixScore === FIX.length ? 'Perfect! No mistakes can hide from you.' : fixScore >= 5 ? 'Great work. Read the rules again and try once more.' : 'Keep going. Remember: if and will never sit together.'));
+      var again = h('button', 'act', 'Try again'); again.type = 'button';
+      again.addEventListener('click', function(){ fixI = 0; fixScore = 0; fixRender(); });
+      fixBox.appendChild(again);
+      return;
+    }
+    var q = FIX[fixI];
+    fixBox.appendChild(h('div', 'meter', 'Question ' + (fixI + 1) + ' of ' + FIX.length));
+    fixBox.appendChild(h('span', 'tagbad', 'Find the mistake'));
+    var p = h('p', 'prompt'); p.appendChild(h('span', 'bad', '\u2717 ' + q.bad)); fixBox.appendChild(p);
+    fixBox.appendChild(h('p', 'muted', 'Which sentence is correct?'));
+    var fb = h('div', 'fb'); fb.hidden = true;
+    var next = h('button', 'act', fixI === FIX.length - 1 ? 'See my score' : 'Next'); next.type = 'button'; next.hidden = true;
+    next.addEventListener('click', function(){ fixI++; fixRender(); });
+    choices(fixBox, q.o, function(ok){
+      if (ok) fixScore++;
+      ruleBox(fb, ok, RULE[q.r]);
+      next.hidden = false;
+      next.focus();
+    });
+    fixBox.appendChild(fb);
+    var row = h('div', 'row'); row.appendChild(next); fixBox.appendChild(row);
+  }
+  fixRender();
+
+  /* ---------- Dice game ---------- */
+  var DICE = {
+    1:[{c:'If it rains tomorrow,',o:['we will stay inside.','we stayed inside.','we will stayed inside.']},{c:'If the bus is late,',o:['we will walk to school.','we walked to school.','we will walked to school.']}],
+    2:[{c:'If you study hard,',o:['you will pass the test.','you passed the test.','you will to pass the test.']},{c:'If he eats too much candy,',o:['he will feel sick.','he felt sick.','he will felt sick.']}],
+    3:[{c:'If I see my friend,',o:['I will say hello.','I said hello.','I will said hello.']},{c:'If we plant a tree,',o:['birds will come.','birds came.','birds will came.']}],
+    4:[{c:'If we recycle bottles,',o:['we will help the planet.','we helped the planet.','we will helping the planet.']},{c:'If you press the button,',o:['the door will open.','the door opened.','the door will opened.']}],
+    5:[{c:'If the sun is hot,',o:['we will drink water.','we drank water.','we will drinking water.']},{c:'If Omar runs fast,',o:['he will win the race.','he won the race.','he will won the race.']}],
+    6:[{c:'If Sara comes,',o:['she will bring her camera.','she brought her camera.','she will brought her camera.']},{c:'If the teacher is happy,',o:['she will give us a sticker.','she gave us a sticker.','she will gave us a sticker.']}]
+  };
+  var PIPS = {1:[4],2:[0,8],3:[0,4,8],4:[0,2,6,8],5:[0,2,4,6,8],6:[0,2,3,5,6,8]};
+  var die = $('die'), rollBtn = $('rollBtn'), diceQ = $('diceQ'), diceFb = $('diceFb'), diceTurn = $('diceTurn');
+  var TURNS = 10, turn = 0, scores = [0,0], rolling = false, teamEls = [], teamInputs = [];
+  function dieFace(n){
+    die.textContent = '';
+    for (var i = 0; i < 9; i++) { var p = h('i'); if (PIPS[n].indexOf(i) >= 0) p.className = 'on'; die.appendChild(p); }
+    die.setAttribute('aria-label', 'Dice showing ' + n);
+  }
+  function teamName(i){ return (teamInputs[i].value || 'Team ' + (i + 1)).trim(); }
+  var teamsEl = $('teams');
+  [0,1].forEach(function(i){
+    var t = h('div', 'team');
+    var inp = h('input'); inp.type = 'text'; inp.value = 'Team ' + (i + 1); inp.maxLength = 14;
+    inp.setAttribute('aria-label', 'Team ' + (i + 1) + ' name');
+    inp.addEventListener('input', diceStatus);
+    var pts = h('div', 'pts', '0');
+    t.appendChild(inp); t.appendChild(pts); teamsEl.appendChild(t);
+    teamEls.push({box:t, pts:pts}); teamInputs.push(inp);
+  });
+  function diceStatus(){
+    teamEls.forEach(function(t, i){
+      t.pts.textContent = scores[i];
+      t.box.classList.toggle('on', turn < TURNS && i === turn % 2);
+    });
+    if (turn >= TURNS) {
+      diceTurn.textContent = 'Game over';
+      rollBtn.textContent = 'Roll the dice';
+      rollBtn.disabled = true;
+    } else {
+      diceTurn.textContent = 'Turn ' + (turn + 1) + ' of ' + TURNS + ' \u00B7 ' + teamName(turn % 2) + ', your turn';
+      rollBtn.textContent = 'Roll the dice';
+    }
+  }
+  function diceReset(){
+    turn = 0; scores = [0,0]; rolling = false;
+    diceQ.textContent = ''; diceFb.hidden = true; rollBtn.disabled = false;
+    dieFace(6); die.classList.remove('rolling');
+    diceStatus();
+  }
+  rollBtn.addEventListener('click', function(){
+    if (rolling || turn >= TURNS) return;
+    rolling = true; rollBtn.disabled = true; diceQ.textContent = ''; diceFb.hidden = true;
+    die.classList.add('rolling');
+    var n = 0, final = 1 + Math.floor(Math.random() * 6);
+    var iv = setInterval(function(){
+      n++;
+      if (n < 9) { dieFace(1 + Math.floor(Math.random() * 6)); return; }
+      clearInterval(iv);
+      die.classList.remove('rolling');
+      dieFace(final);
+      rolling = false;
+      var set = DICE[final], q = set[Math.floor(Math.random() * set.length)];
+      var p = h('p', 'clause'); p.appendChild(document.createTextNode(q.c + ' ')); p.appendChild(h('span', null, '\u2026 ?'));
+      diceQ.appendChild(p);
+      diceQ.appendChild(h('p', 'muted', 'Finish the sentence. Correct answer = ' + final + ' point' + (final > 1 ? 's' : '') + '.'));
+      choices(diceQ, q.o, function(ok){
+        var who = turn % 2;
+        if (ok) scores[who] += final;
+        diceFb.className = 'fb ' + (ok ? 'good' : 'nope');
+        diceFb.textContent = '';
+        var m = h('p'); m.appendChild(h('strong', null, ok ? 'Correct! +' + final + ' points. ' : 'Not this time. '));
+        m.appendChild(document.createTextNode(q.c + ' ' + q.o[0]));
+        diceFb.appendChild(m);
+        diceFb.hidden = false;
+        turn++;
+        if (turn >= TURNS) {
+          var a = scores[0], b = scores[1];
+          diceFb.appendChild(h('p', null, a === b ? 'It\u2019s a draw! Great game.' : (a > b ? teamName(0) : teamName(1)) + ' wins! Well done.'));
+        }
+        diceStatus();
+        if (turn < TURNS) rollBtn.disabled = false;
+      });
+    }, 90);
+  });
+  $('diceReset').addEventListener('click', diceReset);
+  diceReset();
+
+  /* ---------- Drag and drop ---------- */
+  var PAIRS = [
+    ['If it rains,', 'we will take an umbrella.'],
+    ['If you study hard,', 'you will pass the test.'],
+    ['If we plant flowers,', 'bees will come.'],
+    ['If the weather is hot,', 'we will drink water.'],
+    ['If Sara comes,', 'she will bring her camera.'],
+    ['If we recycle,', 'we will help the planet.']
+  ];
+  var ddRows = $('ddRows'), pool = $('pool'), ddMsg = $('ddMsg');
+  var slots = [], cards = [], selected = null;
+
+  function clearMarks(){ slots.forEach(function(s){ s.classList.remove('right','wrong'); }); ddMsg.textContent = ''; }
+  function slotCard(s){ return s.querySelector('.dcard'); }
+  function syncPlaceholders(){
+    slots.forEach(function(s){
+      var ph = s.querySelector('.ph');
+      if (slotCard(s)) { if (ph) ph.remove(); }
+      else if (!ph) s.appendChild(h('span', 'ph', 'drop here'));
+    });
+  }
+  function place(card, target){
+    clearMarks();
+    if (target.classList.contains('slot')) {
+      var old = slotCard(target);
+      if (old && old !== card) pool.appendChild(old);
+      target.appendChild(card);
+    } else {
+      pool.appendChild(card);
+    }
+    syncPlaceholders();
+  }
+  function select(card){
+    cards.forEach(function(c){ c.classList.remove('sel'); });
+    selected = card;
+    if (card) card.classList.add('sel');
+  }
+  function buildDD(){
+    ddRows.textContent = ''; pool.textContent = ''; slots = []; cards = []; selected = null;
+    PAIRS.forEach(function(pr, i){
+      var row = h('div', 'dd-row');
+      row.appendChild(h('span', 'dd-if', pr[0]));
+      var s = h('div', 'slot'); s.tabIndex = 0; s.setAttribute('role', 'button');
+      s.setAttribute('aria-label', 'Box for: ' + pr[0]);
+      s.dataset.i = i;
+      s.appendChild(h('span', 'ph', 'drop here'));
+      s.addEventListener('click', function(){
+        if (selected) { var c = selected; select(null); place(c, s); }
+        else if (slotCard(s)) { place(slotCard(s), pool); }
+      });
+      s.addEventListener('keydown', function(e){ if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); s.click(); } });
+      row.appendChild(s); ddRows.appendChild(row); slots.push(s);
+    });
+    shuffle(PAIRS.map(function(pr, i){ return i; })).forEach(function(i){
+      var c = h('button', 'dcard', PAIRS[i][1]); c.type = 'button'; c.dataset.i = i;
+      wireCard(c); pool.appendChild(c); cards.push(c);
+    });
+    pool.onclick = function(e){ if (selected && e.target === pool) { var c = selected; select(null); place(c, pool); } };
+    syncPlaceholders(); ddMsg.textContent = '';
+  }
+  function wireCard(card){
+    var sx, sy, moved, ghost, down = false;
+    function overEl(x, y){ return document.elementFromPoint(x, y); }
+    function clearOver(){ slots.forEach(function(s){ s.classList.remove('over'); }); pool.classList.remove('over'); }
+    card.addEventListener('pointerdown', function(e){
+      down = true; moved = false; sx = e.clientX; sy = e.clientY;
+      try { card.setPointerCapture(e.pointerId); } catch (err) {}
+    });
+    card.addEventListener('pointermove', function(e){
+      if (!down) return;
+      if (!moved && Math.abs(e.clientX - sx) + Math.abs(e.clientY - sy) > 8) {
+        moved = true;
+        ghost = card.cloneNode(true); ghost.className = 'dcard ghost-card'; ghost.style.width = card.offsetWidth + 'px';
+        document.body.appendChild(ghost);
+        card.classList.add('dragging');
+      }
+      if (moved && ghost) {
+        ghost.style.left = (e.clientX - ghost.offsetWidth / 2) + 'px';
+        ghost.style.top = (e.clientY - ghost.offsetHeight / 2) + 'px';
+        clearOver();
+        var t = overEl(e.clientX, e.clientY), s = t && t.closest ? t.closest('.slot') : null;
+        if (s) s.classList.add('over'); else if (t && t.closest && t.closest('#pool')) pool.classList.add('over');
+      }
+    });
+    function end(e, cancel){
+      if (!down) return;
+      down = false;
+      try { card.releasePointerCapture(e.pointerId); } catch (err) {}
+      if (moved) {
+        if (ghost) { ghost.remove(); ghost = null; }
+        card.classList.remove('dragging'); clearOver();
+        if (!cancel) {
+          var t = overEl(e.clientX, e.clientY);
+          var s = t && t.closest ? t.closest('.slot') : null;
+          if (s) place(card, s); else if (t && t.closest && t.closest('#pool')) place(card, pool);
+        }
+        select(null);
+      } else if (!cancel) {
+        select(selected === card ? null : card);
+      }
+    }
+    card.addEventListener('pointerup', function(e){ end(e, false); });
+    card.addEventListener('pointercancel', function(e){ end(e, true); });
+    card.addEventListener('keydown', function(e){
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); select(selected === card ? null : card); }
+    });
+  }
+  $('ddCheck').addEventListener('click', function(){
+    var right = 0, filled = 0;
+    slots.forEach(function(s, i){
+      s.classList.remove('right','wrong');
+      var c = slotCard(s);
+      if (!c) return;
+      filled++;
+      var ok = Number(c.dataset.i) === i;
+      if (ok) right++;
+      s.classList.add(ok ? 'right' : 'wrong');
+    });
+    ddMsg.textContent = right === PAIRS.length ? 'Perfect! All ' + PAIRS.length + ' sentences are correct.'
+      : right + ' of ' + PAIRS.length + ' correct.' + (filled < PAIRS.length ? ' Fill every box.' : ' Move the red ones.');
+  });
+  $('ddReset').addEventListener('click', buildDD);
+  buildDD();
+
+  /* ---------- X O ---------- */
+  var BANK = [
+    ['If it ___ tomorrow, we will stay inside.', ['rains','will rain','rained']],
+    ['If she studies hard, she ___ the test.', ['will pass','will passes','will passed']],
+    ['If we plant trees, the air ___ cleaner.', ['will be','will is','was']],
+    ['If I ___ Noor, I will say hello.', ['see','will see','saw']],
+    ['If it is hot, we ___ water.', ['will drink','will drank','will drinking']],
+    ['If you ___ the button, the door will open.', ['press','will press','pressed']],
+    ['If they win, they ___ happy.', ['will be','will is','was']],
+    ['If Omar ___ fast, he will win the race.', ['runs','will run','ran']],
+    ['If it rains, we ___ in the garden.', ['won\u2019t play','didn\u2019t play','won\u2019t played']],
+    ['If we see birds, we will ___ them.', ['watch','watched','to watch']],
+    ['If he ___ his homework, he will go out.', ['finishes','will finish','finished']],
+    ['If you don\u2019t hurry, you ___ the bus.', ['will miss','will missed','will missing']],
+    ['If the weather is bad, we ___ the trip.', ['will cancel','will cancelled','cancelling']],
+    ['If students recycle, they ___ the planet.', ['will help','will helped','will helping']]
+  ];
+  var LINES = [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
+  var board = $('board'), xoQ = $('xoQ'), xoFb = $('xoFb'), xoNext = $('xoNext'), xoTurn = $('xoTurn');
+  var cellEls = [], marks, xoPlayer, pending, over, deck = [], wins = {X:0, O:0};
+  function draw(){
+    if (!deck.length) deck = shuffle(BANK);
+    return deck.pop();
+  }
+  for (var c = 0; c < 9; c++) (function(i){
+    var b = h('button', 'cell'); b.type = 'button'; b.setAttribute('aria-label', 'Square ' + (i + 1));
+    b.addEventListener('click', function(){ pick(i); });
+    board.appendChild(b); cellEls.push(b);
+  })(c);
+  function setTurn(){
+    xoTurn.textContent = '';
+    if (over) return;
+    xoTurn.appendChild(document.createTextNode('Team '));
+    xoTurn.appendChild(h('b', xoPlayer, xoPlayer));
+    xoTurn.appendChild(document.createTextNode(pending === null ? ': pick a square.' : ': answer the question.'));
+  }
+  function lock(){ cellEls.forEach(function(b, i){ b.disabled = over || pending !== null || !!marks[i]; }); }
+  function xoReset(){
+    marks = [null,null,null,null,null,null,null,null,null]; xoPlayer = 'X'; pending = null; over = false;
+    cellEls.forEach(function(b){ b.textContent = ''; b.className = 'cell'; });
+    xoQ.hidden = true; xoQ.textContent = ''; xoFb.hidden = true; xoNext.hidden = true;
+    setTurn(); lock();
+  }
+  function pick(i){
+    if (over || pending !== null || marks[i]) return;
+    pending = i; cellEls[i].classList.add('pend');
+    var q = draw();
+    xoQ.hidden = false; xoQ.textContent = ''; xoFb.hidden = true; xoNext.hidden = true;
+    xoQ.appendChild(h('p', 'prompt', q[0]));
+    choices(xoQ, q[1], function(ok){
+      var who = xoPlayer;
+      cellEls[i].classList.remove('pend');
+      if (ok) { marks[i] = who; cellEls[i].textContent = who; cellEls[i].classList.add(who); }
+      var line = null;
+      if (ok) LINES.forEach(function(L){ if (!line && L.every(function(k){ return marks[k] === who; })) line = L; });
+      xoFb.className = 'fb ' + (ok ? 'good' : 'nope'); xoFb.textContent = '';
+      var m = h('p'); m.appendChild(h('strong', null, ok ? 'Correct! ' : 'Not this time. '));
+      xoFb.hidden = false;
+      pending = null;
+      if (line) {
+        over = true; wins[who]++; $('t' + who).textContent = wins[who];
+        line.forEach(function(k){ cellEls[k].classList.add('win'); });
+        m.appendChild(document.createTextNode('Team ' + who + ' wins!'));
+      } else if (marks.every(Boolean)) {
+        over = true;
+        m.appendChild(document.createTextNode('It\u2019s a draw.'));
+      } else {
+        m.appendChild(document.createTextNode(ok ? 'The square is yours.' : 'The square stays open.'));
+        xoPlayer = who === 'X' ? 'O' : 'X';
+        xoNext.hidden = false;
+      }
+      xoFb.appendChild(m);
+      setTurn(); lock();
+    });
+    setTurn(); lock();
+  }
+  xoNext.addEventListener('click', function(){ xoQ.hidden = true; xoQ.textContent = ''; xoFb.hidden = true; xoNext.hidden = true; });
+  $('xoReset').addEventListener('click', xoReset);
+  xoReset();
+})();
+</script>
+</body>
+</html>
